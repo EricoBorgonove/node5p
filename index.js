@@ -1,26 +1,29 @@
-(async () => {
-    const db = require('./db')
-    const funcionarioController = require ('./FuncionarioController') 
+const express = require ('express')
+const path = require ('path')
+const app = express()
+const port = 3000
 
-    //console.log("funcionou")
+app.use (express.static('public'))
 
-    //console.log('Select')
-    //const funcionarios = await funcionarioController.consultaFuncionarios()
-    //console.log(funcionarios)
+app.get('/', (req, res) =>{
+    //res.send('ola Mundo')
+    res.sendFile(path.resolve('index.html'))
+})
 
-    //console.log('Select de 1 funcionario')
-    //const funcionario = await funcionarioController.consulta1Fun(13)
-    //console.log(funcionario)
+app.get ('/cadfun', (req,res) =>{
+    res.sendFile(path.resolve('public/pages/cadastroFun.html'))
+})
 
-    //const retorno = await funcionarioController.insertFuncionario ({nome: "Erico", data_nascimento: "1987-09-16", matricula: "89", data_contratacao: "2023-05-25", setor_id: 5 })
-    //console.log (retorno)
-    
-    //const retorno = await funcionarioController.updateFuncionario (13, 1)
-    //console.log (retorno)
 
-    const retorno = await funcionarioController.deleteFuncionario (13)
-    console.log (retorno)
 
-    
+app.use(function(req, res, next){
+    res.status(404).sendFile(path.resolve('./public/404.html'))
+})
+app.listen (port, ()=> {
+     console.log (`App rodando na porta: ${port}`)
+})
 
-})() 
+
+
+
+
